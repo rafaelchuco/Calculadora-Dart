@@ -8,6 +8,11 @@ void main() {
   ) async {
     await tester.pumpWidget(const CalculatorDesignApp());
 
+    expect(find.text('Iniciar calculadora'), findsOneWidget);
+
+    await tester.tap(find.text('Iniciar calculadora'));
+    await tester.pumpAndSettle();
+
     expect(find.text('CALCULADORA'), findsOneWidget);
     expect(find.text('165'), findsOneWidget);
   });

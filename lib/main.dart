@@ -21,7 +21,96 @@ class CalculatorDesignApp extends StatelessWidget {
         textTheme: GoogleFonts.spaceGroteskTextTheme(),
         scaffoldBackgroundColor: const Color(0xFFF7F2E9),
       ),
-      home: const CalculatorDesignPage(),
+      home: const CalculatorStartPage(),
+    );
+  }
+}
+
+class CalculatorStartPage extends StatelessWidget {
+  const CalculatorStartPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          const _BackdropShapes(),
+          SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: 1),
+                  duration: const Duration(milliseconds: 850),
+                  curve: Curves.easeOutCubic,
+                  builder: (context, value, child) {
+                    return Opacity(
+                      opacity: value,
+                      child: Transform.translate(
+                        offset: Offset(0, 16 * (1 - value)),
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const _CalculatorLogoMark(size: 250),
+                      const SizedBox(height: 28),
+                      Text(
+                        'Calculadora',
+                        style: GoogleFonts.spaceGrotesk(
+                          fontSize: 34,
+                          letterSpacing: 0.3,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF1B3A37),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Diseño limpio y moderno para tus operaciones',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.spaceGrotesk(
+                          fontSize: 16,
+                          color: const Color(0xFF4D5E5B),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 26),
+                      SizedBox(
+                        width: 260,
+                        child: FilledButton(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: const Color(0xFF1C7D73),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute<void>(
+                                builder: (_) => const CalculatorDesignPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Iniciar calculadora',
+                            style: GoogleFonts.spaceGrotesk(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -176,6 +265,159 @@ class _BackdropShapes extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _CalculatorLogoMark extends StatelessWidget {
+  const _CalculatorLogoMark({required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final double pad = size * 0.04;
+    final double topHeight = size * 0.24;
+    final BorderRadius cardRadius = BorderRadius.circular(size * 0.17);
+
+    return Container(
+      width: size,
+      height: size,
+      padding: EdgeInsets.all(pad),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF6F2EA),
+        borderRadius: cardRadius,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x22000000),
+            blurRadius: 28,
+            offset: Offset(0, 14),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: topHeight,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(size * 0.16),
+              gradient: const LinearGradient(
+                colors: [Color(0xFF2C4A47), Color(0xFF133435)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+          SizedBox(height: size * 0.03),
+          Expanded(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: _LogoKey(
+                          label: '+',
+                          background: Color(0xFFEFEBE3),
+                          foreground: Color(0xFF1F4A47),
+                          radius: BorderRadius.only(
+                            topLeft: Radius.circular(26),
+                            bottomRight: Radius.circular(26),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: _LogoKey(
+                          label: '÷',
+                          background: Color(0xFFEE7D4D),
+                          foreground: Colors.white,
+                          radius: BorderRadius.only(
+                            topRight: Radius.circular(26),
+                            bottomLeft: Radius.circular(26),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: size * 0.03),
+                Expanded(
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: _LogoKey(
+                          label: '×',
+                          background: Color(0xFFEFEBE3),
+                          foreground: Color(0xFF1F4A47),
+                          radius: BorderRadius.only(
+                            topRight: Radius.circular(26),
+                            bottomLeft: Radius.circular(26),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: _LogoKey(
+                          label: '=',
+                          background: Color(0xFFEE7D4D),
+                          foreground: Colors.white,
+                          radius: BorderRadius.only(
+                            topLeft: Radius.circular(26),
+                            bottomRight: Radius.circular(26),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LogoKey extends StatelessWidget {
+  const _LogoKey({
+    required this.label,
+    required this.background,
+    required this.foreground,
+    required this.radius,
+  });
+
+  final String label;
+  final Color background;
+  final Color foreground;
+  final BorderRadius radius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: radius,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x15000000),
+            blurRadius: 7,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          label,
+          style: GoogleFonts.spaceGrotesk(
+            fontSize: 56,
+            color: foreground,
+            height: 1,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
     );
   }
