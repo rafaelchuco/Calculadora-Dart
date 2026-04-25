@@ -11,6 +11,10 @@ Importante:
 
 ![Captura de la calculadora](docs/calculadora-ui.png)
 
+## Pantalla de Inicio
+
+![Pantalla de inicio de la calculadora](docs/calculadora-inicio.png)
+
 ## Que se hizo
 
 Se reemplazo la app base de contador por una pantalla de calculadora no funcional, incluyendo:
